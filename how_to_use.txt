@@ -1,0 +1,32 @@
+module top(
+    input  wire clk,
+    input  wire rst,
+
+    inout  wire SDA_bus,
+    input  wire SCL_bus
+
+);
+
+    wire rst_n;
+    assign rst_n = ~rst;
+
+    wire [15:0] addr;
+    wire [31:0] wdata;
+    wire [31:0] rdata;
+    wire wr_en, rd_en;
+
+    i2c_top#(
+        .SLAVE_ADDR(7'h50)
+    ) i2c_top(
+        .clk     (clk),
+        .rst_n   (rst_n),
+
+        .SDA_bus (SDA_bus),
+        .SCL_bus (SCL_bus),
+
+        .addr    (addr),
+        .wdata   (wdata),
+        .rdata   (rdata),
+        .wr_en   (wr_en),
+        .rd_en   (rd_en)
+    );
